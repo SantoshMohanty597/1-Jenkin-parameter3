@@ -79,7 +79,7 @@ pipeline {
                         echo "Deploying to QA-3 - Jenkinsfile-1"
                         build job: '1-parallel-Q3',
                               parameters: [
-                                  string(name: 'DEPLOY_ENV_Q3', value: 'prod-Q3')
+                                  string(name: 'DEPLOY_ENV_3', value: 'prod-Q3')
                               ],
                               wait: true
                     }
