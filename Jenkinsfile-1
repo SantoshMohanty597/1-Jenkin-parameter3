@@ -45,7 +45,7 @@ pipeline {
 
         stage('Deploy By Dev To QA1') {
             when {
-                expression { params.DEPLOY_ENV_1 == 'dev' }
+                expression { params.DEPLOY_ENV == 'dev' }
             }
             steps {
                 echo "Deploying By Dev To QA1 - Jenkinsfile-1"
@@ -56,8 +56,8 @@ pipeline {
         stage('Deploy to QA') {
             when {
                 anyOf {
-                    expression { params.DEPLOY_ENV_1 == 'qa' }
-                    expression { params.DEPLOY_ENV_1 == 'prod' }
+                    expression { params.DEPLOY_ENV == 'qa' }
+                    expression { params.DEPLOY_ENV == 'prod' }
                 }
             }
             parallel {
