@@ -56,7 +56,7 @@ pipeline {
             }
         }
 
-        /* ================= QA (PARALLEL) ================= */
+        /* ================= QA (PARALLEL) ================== */
         stage('Deploy to QA') {
             when {
                 anyOf {
