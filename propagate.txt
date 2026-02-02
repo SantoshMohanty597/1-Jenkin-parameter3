@@ -1,0 +1,15 @@
+If you don’t want QA-3 failure to fail the parent, use:
+
+build job: '1-parallel-Q3',
+      parameters: [
+          string(name: 'DEPLOY_ENV_3', value: 'prod-Q3')
+      ],
+      wait: true,
+      propagate: false
+
+
+This way:
+
+QA-3 failure is visible
+
+Parent pipeline does NOT fail
