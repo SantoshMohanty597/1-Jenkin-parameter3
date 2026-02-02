@@ -1,0 +1,10 @@
+pipeline{
+    agent any 
+    stages{
+        stage('Reached QA-2 from Jenkinsfile-1'){
+            steps{
+                echo "Deployed to QA-2 from Jenkinsfile-1"
+            }
+        }
+    }
+}
