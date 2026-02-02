@@ -11,7 +11,7 @@ pipeline{
     stages{
         stage('Reached QA-3 from Jenkinsfile-1'){
             steps{
-                echo "Deployed to QA-3 from Jenkinsfile-1 with param: ${params.DEPLOY_ENV_1}"
+                echo "Deployed to QA-3 from Jenkinsfile-1 with param: ${params.DEPLOY_ENV_3}"
             }
         }
     }
