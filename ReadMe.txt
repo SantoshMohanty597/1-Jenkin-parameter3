@@ -14,3 +14,15 @@ The key features include:
 - Synchronizing the completion of parallel tasks.
 - Passing results from parallel tasks to subsequent stages.
 
+DEV  →  QA1 & QA2 (parallel)  →  PROD
+To set up this project, follow these steps:
+
+Design idea (simple words)
+
+DEV runs first
+
+QA1 and QA2 run at the same time
+PROD runs only after QA1 & QA2 both succeed
+You control behavior using parameters
+
+Everything is inside one Jenkinsfile
