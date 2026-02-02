@@ -1,17 +1,18 @@
-pipeline{
-    agent any 
-    parameters{
-        choice:(
+pipeline {
+    agent any
+
+    parameters {
+        choice(
             name: 'DEPLOY_ENV_3',
             choices: ['prod-Q3'],
             description: 'Select deployment level'
         )
     }
 
-    stages{
-        stage('Reached QA-3 from Jenkinsfile-1'){
-            steps{
-                echo "Deployed to QA-3 from Jenkinsfile-1 with param"
+    stages {
+        stage('Reached QA-3 from Jenkinsfile-1') {
+            steps {
+                echo "Deployed to QA-3 from Jenkinsfile-1 with param: ${params.DEPLOY_ENV_3}"
             }
         }
     }
