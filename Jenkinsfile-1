@@ -11,7 +11,7 @@ pipeline {
 
     stages {
 
-        /* =========== CHANGE DETECTION ============= */
+        /* =========== CHANGE DETECTION ============== */
         stage('Change Detection') {
             steps {
                 script {
