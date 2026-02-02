@@ -49,13 +49,18 @@ pipeline {
             }
             steps {
                 echo "Deploying By Dev To QA1 - Jenkinsfile-1"
-                build job: '1-parallel-Q1', wait: false
+                build job: '1-parallel-Q1', wait: true
+
+                script {
+                env.AUTO_QA = "true"
+        }
             }
         }
 
         stage('Deploy to QA') {
             when {
                 anyOf {
+                    expression { env.AUTO_QA == 'true' }
                     expression { params.DEPLOY_ENV == 'qa' }
                     expression { params.DEPLOY_ENV == 'prod' }
                 }
@@ -65,7 +70,7 @@ pipeline {
                 stage('QA-2') {
                     steps {
                         echo "Deploying to QA-2 - Jenkinsfile-1"
-                        build job: '1-parallel-Q2', wait: false
+                        build job: '1-parallel-Q2', wait: true
                     }
                 }
 
@@ -76,7 +81,7 @@ pipeline {
                               parameters: [
                                   string(name: 'DEPLOY_ENV_Q3', value: 'prod-Q3')
                               ],
-                              wait: false
+                              wait: true
                     }
                 }
             }
