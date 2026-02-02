@@ -1,63 +1,89 @@
-pipeline{
-    agent any 
-    parameters{
-        choice:(
+pipeline {
+    agent any
+
+    parameters {
+        choice(
             name: 'DEPLOY_ENV_1',
             choices: ['dev', 'qa', 'prod'],
             description: 'Select deployment level'
         )
     }
-    stages{
-        stage('Build'){
-            steps{
+
+    stages {
+
+        /* ========== CHANGE DETECTION ========== */
+        stage('Change Detection') {
+            steps {
+                script {
+                    def changedFiles = sh(
+                        script: "git diff --name-only HEAD~1 HEAD",
+                        returnStdout: true
+                    ).trim()
+
+                    echo "Changed files:\n${changedFiles}"
+
+                    if (!changedFiles.contains('Jenkinsfile-1')) {
+                        echo "No changes in Jenkinsfile-1 — exiting"
+                        currentBuild.result = 'NOT_BUILT'
+                        error("Stopping pipeline")
+                    }
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
                 echo "Building application - Jenkinsfile-1"
             }
         }
 
-        stage('Test'){
-            steps{
+        stage('Test') {
+            steps {
                 echo "Running tests - Jenkinsfile-1"
             }
         }
 
-        stage('Deploy By Dev To QA1'){
-            when{
-                expression{ params.DEPLOY_ENV_1 == 'dev' }
+        stage('Deploy By Dev To QA1') {
+            when {
+                expression { params.DEPLOY_ENV_1 == 'dev' }
             }
-            steps{
+            steps {
                 echo "Deploying By Dev To QA1 - Jenkinsfile-1"
                 build job: '1-parallel-Q1', wait: false
             }
         }
 
-        stage('Deploy to QA'){
-            when{
-                anyOf{
-                    expression{ params.DEPLOY_ENV_1 == 'qa' }
-                    expression{ params.DEPLOY_ENV_1 == 'prod' }
+        stage('Deploy to QA') {
+            when {
+                anyOf {
+                    expression { params.DEPLOY_ENV_1 == 'qa' }
+                    expression { params.DEPLOY_ENV_1 == 'prod' }
                 }
             }
-            parallel{
-                stage('QA-2'){
-                    steps{
+            parallel {
+
+                stage('QA-2') {
+                    steps {
                         echo "Deploying to QA-2 - Jenkinsfile-1"
                         build job: '1-parallel-Q2', wait: false
                     }
                 }
-                stage('QA-3'){
-                    steps{
+
+                stage('QA-3') {
+                    steps {
                         echo "Deploying to QA-3 - Jenkinsfile-1"
                         build job: '1-parallel-Q3',
-                        parameters{
-                            string(name: 'DEPLOY_ENV_Q3', value: 'prod-Q3')
-                        }
-                        wait: false
+                              parameters: [
+                                  string(name: 'DEPLOY_ENV_Q3', value: 'prod-Q3')
+                              ],
+                              wait: false
                     }
                 }
             }
         }
-        stage('Completed'){
-            steps{
+
+        stage('Completed') {
+            steps {
                 echo "Pipeline Completed - Jenkinsfile-1"
             }
         }
