@@ -1,4 +1,4 @@
-This is understanding the Parllel Programming project.
+This is understanding the Parallel Programming project.
 
 Also be Using Parameterized Builds in Jenkins.
 

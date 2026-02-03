@@ -1,0 +1,24 @@
+// Jenkinsfile-2a
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'INPUT_VALUE', defaultValue: 'hello')
+    }
+
+    stages {
+        stage('Process') {
+            steps {
+                script {
+                    echo "Received value: ${params.INPUT_VALUE}"
+
+                    if (params.INPUT_VALUE == 'fail') {
+                        error("Forcing failure from Jenkinsfile-2a")
+                    }
+
+                    echo "Child job completed successfully"
+                }
+            }
+        }
+    }
+}

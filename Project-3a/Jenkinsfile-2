@@ -1,0 +1,36 @@
+// Jenkinsfile-2
+pipeline {
+    agent any
+
+    stages {
+        stage('Trigger Child Job') {
+            steps {
+                script {
+
+                    def childBuild = build(
+                        job: '1-parallel-2a',
+                        parameters: [
+                            string(name: 'INPUT_VALUE', value: 'hello')
+                        ],
+                        wait: true,
+                        propagate: false
+                    )
+
+                    echo "Child job result: ${childBuild.result}"
+                    echo "Child build number: ${childBuild.number}"
+                    echo "Child build URL: ${childBuild.absoluteUrl}"
+
+                    if (childBuild.result != 'SUCCESS') {
+                        error("Child job failed, stopping parent")
+                    }
+                }
+            }
+        }
+
+        stage('Continue Parent') {
+            steps {
+                echo "Parent continues after successful child job"
+            }
+        }
+    }
+}
