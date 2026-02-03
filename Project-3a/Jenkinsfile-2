@@ -4,24 +4,24 @@ pipeline {
 
     stages {
 
-        stage('Change Detection') {
-            steps {
-                script {
-                    def changedFiles = sh(
-                        script: "git diff --name-only HEAD~1 HEAD",
-                        returnStdout: true
-                    ).trim()
+        // stage('Change Detection') {
+        //     steps {
+        //         script {
+        //             def changedFiles = sh(
+        //                 script: "git diff --name-only HEAD~1 HEAD",
+        //                 returnStdout: true
+        //             ).trim()
 
-                    echo "Changed files:\n${changedFiles}"
+        //             echo "Changed files:\n${changedFiles}"
 
-                    if (!changedFiles.contains('Project-3a/Jenkinsfile-2')) {
-                        echo "Jenkinsfile-2 not changed. Exiting."
-                        currentBuild.result = 'NOT_BUILT'
-                        error("Stopping pipeline")
-                    }
-                }
-            }
-        }
+        //             if (!changedFiles.contains('Project-3a/Jenkinsfile-2')) {
+        //                 echo "Jenkinsfile-2 not changed. Exiting."
+        //                 currentBuild.result = 'NOT_BUILT'
+        //                 error("Stopping pipeline")
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Trigger Child Job') {
             steps {
