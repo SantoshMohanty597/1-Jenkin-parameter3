@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     stages {
-        
+
         stage('Change Detection') {
             steps {
                 script {
@@ -39,7 +39,7 @@ pipeline {
                     echo "Child job result: ${childBuild.result}"
                     echo "Child build number: ${childBuild.number}"
                     echo "Child build URL: ${childBuild.absoluteUrl}"
-                    echo "Got Result from Childs Job"
+                    echo "Got Result from Child Job"
 
                     if (childBuild.result != 'SUCCESS') {
                         error("Child job failed, stopping parent")
