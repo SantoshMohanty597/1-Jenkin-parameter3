@@ -11,25 +11,25 @@ pipeline {
 
     stages {
 
-        /* =============== CHANGE DETECTION ================== */
-        stage('Change Detection') {
-            steps {
-                script {
-                    def changedFiles = sh(
-                        script: "git diff --name-only HEAD~1 HEAD",
-                        returnStdout: true
-                    ).trim()
+        // /* =============== CHANGE DETECTION ================== */
+        // stage('Change Detection') {
+        //     steps {
+        //         script {
+        //             def changedFiles = sh(
+        //                 script: "git diff --name-only HEAD~1 HEAD",
+        //                 returnStdout: true
+        //             ).trim()
 
-                    echo "Changed files:\n${changedFiles}"
+        //             echo "Changed files:\n${changedFiles}"
 
-                    if (!changedFiles.contains('Jenkinsfile-1')) {
-                        echo "No changes in Jenkinsfile-1 — exiting"
-                        currentBuild.result = 'NOT_BUILT'
-                        error("Stopping pipeline")
-                    }
-                }
-            }
-        }
+        //             if (!changedFiles.contains('Jenkinsfile-1')) {
+        //                 echo "No changes in Jenkinsfile-1 — exiting"
+        //                 currentBuild.result = 'NOT_BUILT'
+        //                 error("Stopping pipeline")
+        //             }
+        //         }
+        //     }
+        // }
 
         stage('Build') {
             steps {
