@@ -50,7 +50,7 @@ pipeline {
 
         stage('Continue Parent') {
             steps {
-                echo "Parent continues after successful child job"
+                echo "Parent continues after successfully child job"
             }
         }
     }
